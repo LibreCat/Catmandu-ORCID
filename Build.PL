@@ -18,7 +18,7 @@ my $builder = Module::Build->new(
         'perl' => '5.10.0',
         'Catmandu' => '0.2002',
         'Moo' => '1.002000',
-        'Net::Twitter' => undef,
+        'WWW::ORCID' => undef,
     },
     add_to_cleanup => [qw(
         Catmandu-ORCID-*
