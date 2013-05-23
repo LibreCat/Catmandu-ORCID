@@ -35,7 +35,7 @@ L<Catmandu::Iterable>
 package Catmandu::Importer::ORCID;
 
 use Catmandu::Sane;
-use Net::ORCID::API::Pub;
+use WWW::ORCID::API::Pub;
 use Moo;
 use YAML;
 
@@ -47,7 +47,7 @@ has id    => (is => 'ro' , required => 1);
 has orcid => (is => 'ro' , init_arg => undef , lazy => 1 , builder => '_build_orcid');
 
 sub _build_orcid {
-    Net::ORCID::API::Pub->new();
+    WWW::ORCID::API::Pub->new();
 }
 
 sub generator {
