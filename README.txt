@@ -13,6 +13,7 @@ SYNOPSIS
            });
 
 METHODS
+
    new(id => '...')
        Create a new ORCID importer using an identifier as input.
 
