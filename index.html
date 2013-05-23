@@ -15,6 +15,7 @@
   <body>
     <div class="wrapper">
       <header>
+      <a href="http://librecat.org"><img src="images/librecat4.png" width="120" height="120" border="0"/></a>
         <h1>Catmandu-ORCID</h1>
         <p>Open Tools for Library and Research Services</p>
 
@@ -26,13 +27,90 @@
           <li><a href="https://github.com/LibreCat/Catmandu-ORCID/tarball/master">Download <strong>TAR Ball</strong></a></li>
           <li><a href="https://github.com/LibreCat/Catmandu-ORCID">View On <strong>GitHub</strong></a></li>
         </ul>
+
+        <h3>Install</h3>
+        <code>
+            # cpan Task::Catmandu<br>
+            # cpan WWW::ORCID<br>
+            # cpan Catmandu::ORCID<br>
+        </code>
       </header>
       <section>
-        <p>Bla</p>
+        <h2>Extend your Perl scripts fast and easily</h2>
+        <h3>Extract</h3>
+        <p>You need to import all publications form an author into your environment. If you happen to know the <a href="http://orcid.org">ORCID</a> of the researcher, then we in <a href="http://search.cpan.org/~nics/Catmandu-0.2002/lib/Catmandu/Introduction.pod">Catmandu</a> can say something like:</p>
+        <code>
+               catmandu convert ORCID --id 0000-0001-8390-6171 to JSON
+        </code>
+        <p style="margin-top: 10px;">
+        or, if you fancy more YAML, we can say
+        </p>
+        <code>
+               catmandu convert ORCID --id 0000-0001-8390-6171 to YAML
+        </code>
+        
+        <h3 style="margin-top: 10px;">Transform</h3>
+        <p>Most probably the ORCID record format won't fit your local data model. You need to clean up the data and map it 
+        to your local requirements. In Catmandu we can process each record with a small DSL language:</p>
+
+        <code>
+               catmandu convert ORCID --id 0000-0001-8390-6171 to YAML --fix fix.txt
+        </code>
+        
+        <p style="margin-top: 10px;">
+            with fix.txt as:
+        </p>
+        <code>
+                move_field('work-title.title.value','title');<br>
+                move_field('work-citation.citation','citation');<br>
+                move_field('put-code','_id');<br>
+                remove_field('work-citation');<br>
+                remove_field('work-contributors');<br>
+                remove_field('work-external-identifiers');<br>
+                remove_field('work-source');<br>
+                remove_field('work-title');<br>
+                remove_field('visibility');<br>
+        </code>
+        <h3 style="margin-top: 10px;">Load</h3>
+        <p>
+        All this hard work you need to store somewhere. In MongoDB?
+        </p>
+        <code>
+                catmandu import ORCID --id 0000-0001-8390-6171 to MongoDB --database_name testing
+        </code>
+        <p style="margin-top: 10px;">
+        Or, maybe in ElasticSearch?
+        </p>
+        <code>
+                catmandu import ORCID --id 0000-0001-8390-6171 to ElasticSearch --index_name testing
+        </code>
+
+        <h3 style="margin-top: 10px;">Lazy</h3>
+        <p>
+        Of course, you can do all this also with our functional Perl API-s. But we tend to be lazy. Why type 
+        something like this?
+        </p>
+        <code>
+                    use Catmandu::Importer::ORCID;<br>
+                    my $importer = <br>
+                    &nbsp;&nbsp; Catmandu::Importer::ORCID->new(id => '0000-0001-8390-6171');<br>
+                    <br>
+                    $importer->each(sub {<br>
+                     &nbsp;&nbsp; my $pub = shift;<br>
+                     &nbsp;&nbsp; print Dumper($pub);<br>
+                    });
+        </code>
+        <p style="margin-top: 10px;">
+        when you don't need to?
+        </p>
+        
+        <h3 style="margin-top: 10px;">Join</h3>
+        <p>
+        Join us at <a href="http://librecat.org">LibreCat</a> : an open collaboration to provide freely available tools for library and research services.
+        </p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/LibreCat">LibreCat</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
