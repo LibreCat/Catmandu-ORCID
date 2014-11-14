@@ -25,3 +25,9 @@ METHODS
 
 SEE ALSO
        Catmandu::Iterable
+
+AUTHOR
+       Patrick Hochstenbach
+
+MAINTAINER
+       Christian Pietsch <cpietsch+librecat at uni-bielefeld.de>
